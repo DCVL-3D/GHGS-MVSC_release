@@ -1,0 +1,25 @@
+# ---- your rules ----
+*.yaml
+*.yml
+*.json
+events.*
+*.pyc
+*.png
+*.jpg
+*.glb
+*.pth
+*.txt
+vggt/
+pytorch3d/
+__pycache__/
+
+# ---- allowlist (keep these) ----
+!environment.yml
+!requirements.txt
+!requirement.txt
+!config/*.yaml
+!config/*.yml
+!config/**/*.yaml
+!config/**/*.yml
+!*.md
+!LICENSE
