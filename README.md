@@ -1,225 +1,114 @@
-# SemanticGHGS (Release)
+<h1 align="center">Generalizable Human Gaussian Splatting<br>via Multi-view Semantic Consistency</h1>
 
-SemanticGHGS is a feed-forward pipeline for human rendering / reconstruction based on Gaussian Splatting-style primitives and a geometry-aware transformer backbone.
+Official PyTorch implementation of **"Generalizable Human Gaussian Splatting via Multi-view Semantic Consistency"**  
+🎸 *CVPR 2026 Findings* 🎸
 
-> **Status**: Research release (training + evaluation scripts included)
-
----
-
-## Highlights
-- **CUDA 11.8 / PyTorch 2.0.1** tested
-- Supports **THuman2.0** preprocessing + rendering-based data preparation
-- Training / evaluation scripts for reproduction
+<p align="center">
+  <!-- Replace with your teaser figures -->
+  <!-- <img src="figures/teaser.gif" width="90%"/> -->
+</p>
 
 ---
 
-## Environment
+## :eyes: Overview
+This repository provides the training and evaluation code for **generalizable human Gaussian splatting** from sparse multi-view inputs.
 
-### Tested setup
-- OS: Ubuntu 20.04/22.04
-- GPU: NVIDIA (tested on RTX 3090 / 4090)
-- CUDA: **11.8**
-- PyTorch: **2.0.1**
-- torchvision: **0.15.2**
-- torchaudio: **2.0.2**
-- PyTorch3D: **0.7.7** (via conda)
-
-> If you use a different CUDA/PyTorch combo, you may need to rebuild CUDA extensions (e.g., rasterizer).
+Our method:
+- encodes multi-view inputs with a **pre-trained VGGT** backbone,
+- predicts per-view depth maps and **unprojects latent embeddings into a shared 3D space**,
+- recalibrates spatially adjacent embeddings with **cross-view attention weighted by semantic consistency**,
+- regresses Gaussian attributes and renders novel views with a rasterizer-based pipeline.
 
 ---
 
-## Installation
+## 📦 Installation
 
-### 1) Clone this repository
+### 1) Clone
 ```bash
 git clone https://github.com/jingi0614/SemanticGHGS_release.git
 cd SemanticGHGS_release
 ```
 
-### 2) Install dependencies (recommended)
-We provide a one-shot installer:
+### 2) Create environment + install dependencies
+We provide an installer:
 ```bash
 bash install.sh
 ```
 
 This will:
-- create a conda env (`SemanticGHGS`)
-- install PyTorch(+CUDA), PyTorch3D, iopath
-- install `requirements.txt`
-- install `./submodules/diff-gaussian-rasterization/`
-
-> If you prefer manual installation, see **Manual Install** below.
+- create a conda env (`SemanticGHGS`, Python 3.8)
+- install **PyTorch 2.0.1 + CUDA 11.8**, PyTorch3D, iopath
+- install Python deps via `requirements.txt`
+- build/install `./submodules/diff-gaussian-rasterization/`
 
 ### 3) VGGT dependency
-This project relies on VGGT. Clone it as follows:
+Clone VGGT under the project root (or set your `PYTHONPATH` accordingly):
 ```bash
-# from the repo root
 git clone <VGGT_REPO_URL> vggt
 ```
 
-Make sure your code can import VGGT (e.g., by keeping `vggt/` under the project root, or by setting `PYTHONPATH`).
-
 ---
 
-## Dataset: THuman2.0
+## 🗂️ Dataset (THuman2.0)
 
-### 1) Download
-Download THuman2.0 from the official source and place it under a dataset directory.
+### Download
+Download **THuman2.0** from the official source (access may be required).
 
 Recommended structure:
 ```text
 datasets/
   THuman2.0/
-    raw/            # downloaded data
-    processed/      # outputs from preprocessing
-```
-
-> Notes:
-> - You may need to request access depending on the dataset policy.
-> - Ensure file permissions and paths are correct.
-
----
-
-## Preprocessing (Rendering-based)
-
-We provide preprocessing scripts that render / prepare training inputs.
-
-### 1) Configure paths
-Edit config(s) in:
-- `config/` (e.g., `config_thu.yaml`)
-
-Make sure dataset root paths are correct.
-
-### 2) Run preprocessing
-Example:
-```bash
-python prepare_data/render_data.py \
-  --config config/config_thu.yaml
-```
-
-Outputs (example):
-```text
-datasets/THuman2.0/processed/
-  images/
-  masks/
-  cameras/
-  ...
+    raw/
+    processed/
 ```
 
 ---
 
-## Training
+## 🧪 Training
 
-### 1) Configure training
-Check the main config:
+1) Set dataset paths in the config (example):
 - `config/config_thu.yaml`
 
-Set:
-- dataset paths
-- batch size / num views
-- output directory (`experiments/...`)
-- checkpoints saving schedule
-
-### 2) Run training
+2) Run training:
 ```bash
 python train.py --config config/config_thu.yaml
 ```
 
-Checkpoints will be saved to:
+Checkpoints are saved under:
 ```text
 experiments/<exp_name>/ckpt/
 ```
 
 ---
 
-## Evaluation / Inference
+## 🎬 Evaluation / Inference
 
-### 1) Run inference
 ```bash
 python test.py --config config/config_thu.yaml --ckpt <PATH_TO_CKPT>
 ```
 
-Outputs:
+Outputs (example):
 ```text
 experiments/<exp_name>/test/
-  *.png / *.jpg
-  metrics.json
+  *.jpg / *.png
+  result.json
 ```
-
----
-
-## Project Structure
-
-```text
-SemanticGHGS_release/
-  config/                      # configs
-  gaussian_renderer/           # renderer modules
-  lib/                         # datasets, networks, utils
-  prepare_data/                # preprocessing scripts
-  submodules/
-    diff-gaussian-rasterization/  # CUDA extension
-  vggt/                        # external dependency (clone separately)
-  install.sh
-  requirements.txt
-  train.py
-  test.py
-```
-
----
-
-## Manual Install (optional)
-
-If you prefer installing step-by-step (instead of `install.sh`), you can follow:
-```bash
-conda env create -f environment.yml
-conda activate SemanticGHGS
-pip install -r requirements.txt
-pip install ./submodules/diff-gaussian-rasterization/
-```
-
----
-
-## Troubleshooting
-
-### Build / CUDA extension issues
-If you see errors like:
-- `CUDA_HOME not set`
-- `nvcc not found`
-- `undefined symbol` / ABI mismatch
-- torch-cuda version mismatch
-
-Try:
-1) verify CUDA toolkit and driver versions
-2) ensure PyTorch CUDA version matches your runtime
-3) clean and reinstall extension:
-```bash
-pip uninstall -y diff-gaussian-rasterization
-pip install ./submodules/diff-gaussian-rasterization/ --no-build-isolation
-```
-
-### PyTorch3D installation
-We recommend installing PyTorch3D via conda (already included in `install.sh`).
-If solver fails, ensure channels include `pytorch3d`, `pytorch`, and `nvidia`.
 
 ---
 
 ## License
-This repository is released for research use. Third-party code may have its own licenses under `submodules/` and `vggt/`.
+This repository is released for research use.  
+Third-party components under `submodules/` and `vggt/` may have their own licenses—please check them before use.
 
 ---
 
 ## Citation
-If you use this codebase, please cite:
+If you use this codebase, please cite our paper:
 ```bibtex
-@misc{SemanticGHGS,
-  title={SemanticGHGS},
-  author={...},
-  year={2026},
-  howpublished={\url{https://github.com/jingi0614/SemanticGHGS_release}}
+@inproceedings{SemanticGHGS2026,
+  title     = {Generalizable Human Gaussian Splatting via Multi-view Semantic Consistency},
+  author    = {Jingi Kim and ...},
+  booktitle = {CVPR (Findings)},
+  year      = {2026}
 }
 ```
-
----
-
-## Contact
-- Jingi Kim (김진기): <YOUR_EMAIL>
