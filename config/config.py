@@ -31,12 +31,15 @@ class Config:
         self.cfg.dataset.valid_ref_view_num = 4
         self.cfg.dataset.ratio = 1.0
         # gsussian render settings
+        # self.cfg.dataset.bg_color = [1, 1, 1]
         self.cfg.dataset.bg_color = [0, 0, 0]
         self.cfg.dataset.zfar = 1000.0
         self.cfg.dataset.znear = 0.1
+        # self.cfg.dataset.zfar = 3
+        # self.cfg.dataset.znear = 1
         self.cfg.dataset.trans = [0.0, 0.0, 0.0]
         self.cfg.dataset.scale = 1.0
-
+        self.cfg.dataset.target_res = None
 
 
         self.cfg.record = CN()
@@ -77,43 +80,7 @@ class Config:
         self.cfg.model.encoder.gaussian_adapter.gaussian_scale_max= 15.0
         self.cfg.model.encoder.gaussian_adapter.sh_degree= 4
 
-        self.cfg.model.encoder.d_feature= 128
-
-        self.cfg.model.encoder.epipolar_transformer=CN()
-        self.cfg.model.encoder.epipolar_transformer.self_attention=CN()
-        self.cfg.model.encoder.epipolar_transformer.self_attention.patch_size= 4
-        self.cfg.model.encoder.epipolar_transformer.self_attention.num_octaves= 10
-        self.cfg.model.encoder.epipolar_transformer.self_attention.num_layers= 2
-        self.cfg.model.encoder.epipolar_transformer.self_attention.num_heads= 4
-        self.cfg.model.encoder.epipolar_transformer.self_attention.d_token= 128
-        self.cfg.model.encoder.epipolar_transformer.self_attention.d_dot= 128
-        self.cfg.model.encoder.epipolar_transformer.self_attention.d_mlp= 256
-
-        self.cfg.model.encoder.epipolar_transformer.num_octaves= 10
-        self.cfg.model.encoder.epipolar_transformer.num_layers= 2
-        self.cfg.model.encoder.epipolar_transformer.num_heads= 4
-        self.cfg.model.encoder.epipolar_transformer.num_samples= 32
-        self.cfg.model.encoder.epipolar_transformer.d_dot= 128
-        self.cfg.model.encoder.epipolar_transformer.d_mlp= 256
-        self.cfg.model.encoder.epipolar_transformer.downscale= 4
-
-        self.cfg.model.encoder.visualizer=CN()
-        self.cfg.model.encoder.visualizer.num_samples= 8
-        self.cfg.model.encoder.visualizer.min_resolution= 256
-        self.cfg.model.encoder.visualizer.export_ply= False
-
         self.cfg.model.encoder.apply_bounds_shim= True
-
-        # Use this to ablate the epipolar transformer.
-        self.cfg.model.encoder.use_epipolar_transformer= True
-
-        self.cfg.model.encoder.use_transmittance= False
-
-        self.cfg.model.encoder.backbone=CN()
-        self.cfg.model.encoder.backbone.name= "dino"
-        self.cfg.model.encoder.backbone.backbone=CN()
-        self.cfg.model.encoder.backbone.backbone.model= "dino_vitb8"
-        self.cfg.model.encoder.backbone.backbone.d_out= 512
 
     def get_cfg(self):
         return self.cfg.clone()

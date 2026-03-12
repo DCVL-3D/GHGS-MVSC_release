@@ -344,6 +344,9 @@ class SMPL(nn.Module):
         if transl is None and hasattr(self, 'transl'):
             transl = self.transl
 
+        print("asdfasdfas",global_orient.shape, body_pose.shape)
+        import sys
+        sys.exit()
         full_pose = torch.cat([global_orient, body_pose], dim=1)
 
         batch_size = max(betas.shape[0], global_orient.shape[0], body_pose.shape[0])

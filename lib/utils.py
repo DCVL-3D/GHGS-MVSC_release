@@ -9,6 +9,46 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+def load_and_preprocess_mask(img_path, crop_size=1024, resize_size=512):
+    mask = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+    if mask is None:
+        raise FileNotFoundError(f"Mask not found: {img_path}")
+    
+    mask_bin = (mask > 0).astype(np.uint8) * 255
+
+    H, W = mask_bin.shape  # (H, W)
+    x0 = (W - crop_size) // 2
+    y0 = (H - crop_size) // 2
+    x1 = x0 + crop_size
+    y1 = y0 + crop_size
+    mask_pil = Image.fromarray(mask_bin)
+    mask_cropped = mask_pil.crop((x0, y0, x1, y1))
+    mask_resized = mask_cropped.resize((resize_size, resize_size), Image.Resampling.NEAREST)
+    return np.array(mask_resized, dtype=np.uint8)
+
+def load_and_preprocess_img(img_path, K, crop_size=1024, resize_size=512):
+    img = Image.open(img_path).convert("RGB")
+    W, H = img.size
+    x0 = (W - crop_size) // 2
+    y0 = (H - crop_size) // 2
+    x1 = x0 + crop_size
+    y1 = y0 + crop_size
+
+    img_cropped = img.crop((x0, y0, x1, y1))
+    img_resized = img_cropped.resize((resize_size, resize_size),Image.Resampling.BICUBIC)
+
+    K_new = K.copy().astype(np.float32)
+    K_new[0, 2] = K[0, 2] - x0
+    K_new[1, 2] = K[1, 2] - y0
+    scale_x = resize_size / crop_size
+    scale_y = resize_size / crop_size
+    K_new[0, 0] = K_new[0, 0] * scale_x
+    K_new[1, 1] = K_new[1, 1] * scale_y
+    K_new[0, 2] = K_new[0, 2] * scale_x
+    K_new[1, 2] = K_new[1, 2] * scale_y
+
+    return np.array(img_resized), K_new
+
 def tensor_erode(bin_img, ksize=5):
     B, C, H, W = bin_img.shape
     pad = (ksize - 1) // 2
@@ -44,6 +84,10 @@ def read_img(name):
 def read_depth(name):
     return cv2.imread(name, cv2.IMREAD_UNCHANGED).astype(np.float32) / 2.0 ** 15
 
+def read_mask(name):
+    img = mask = cv2.imread(name, cv2.IMREAD_GRAYSCALE)
+    mask_bin = (mask > 0).astype(np.uint8) * 255
+    return mask_bin
 
 def project(pts, extrinsic, intrinsic):
     pts = pts.T

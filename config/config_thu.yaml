@@ -1,28 +1,23 @@
-name: 'thuman'
-stage1_ckpt: None
+name: 'experiment_Debug'
 restore_ckpt: None
-depth_ckpt: None
 lr: 0.0001
 wdecay: 1e-5
 batch_size: 1
-stage_1_num_steps: 200000
-depth_refine_num_steps: 20000
-stage_2_num_steps: 200000
-coarse_vox_size: 0.005
-fine_vox_size: 0.01
+stage_1_num_steps: 200010
 dataset:
   source_id: [0, 1]
   train_novel_id: [2, 3, 4]
   val_novel_id: [3]
   use_hr_img: False
   use_processed_data: True
-  data_root: '../../dataset/Thuman2/render'
+  data_root: '/mnt/KJG/Human_rendering/dataset/thuman2/render_ROG'
   training_view_num: 16
   ref_view: [0,4,8,12]
   ref_view_num: 4
   valid_ref_view_num: 4
   ratio: 0.5
   bg_color: [0.,0.,0.]
+  target_res: [512, 512]
 model:
   encoder:
     gsnet:

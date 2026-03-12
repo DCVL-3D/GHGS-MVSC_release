@@ -75,8 +75,10 @@ class StaticRenderer:
     def __init__(self):
         ti.init(arch=ti.cuda, device_memory_fraction=0.8)
         self.scene = t3.Scene()
-
-        self.smpl = smplx.SMPL(os.path.join(os.getcwd(), 'smpl'))
+        # print('self.smpl!',os.path.join(os.getcwd(), 'smpl'))
+        smpl_path = 'ROOT/SMPL_NEUTRAL.pkl'
+        # self.smpl = smplx.SMPL(os.path.join(os.getcwd(), 'smpl'))
+        self.smpl = smplx.SMPL(smpl_path)
         self.N = 10
 
     def change_all(self):
@@ -174,7 +176,7 @@ def render_data(renderer, data_path, phase, data_id, save_path, cam_nums, res, d
     angle_base = np.random.choice(angle_list, 1)[0]
     if is_thuman:
         # thuman needs a normalization of orientation
-        smpl_path = os.path.join(data_path, 'THuman2.0_Smpl_X_Paras', data_id, 'smplx_param.pkl')
+        smpl_path = os.path.join(data_path, 'smplx_2', data_id, 'smplx_param.pkl')
         with open(smpl_path, 'rb') as f:
             smpl_para = pickle.load(f)
 
@@ -182,7 +184,7 @@ def render_data(renderer, data_path, phase, data_id, save_path, cam_nums, res, d
         angle_base += (y_orient * 180.0 / np.pi)
 
         # resize smplx vertices
-        smpl_path = os.path.join(data_path, 'Thuman2.0_smpl', data_id + '_smpl.pkl')
+        smpl_path = os.path.join(data_path, 'smpl', data_id + '.pkl')
 
         with open(smpl_path, 'rb') as f:
             smpl_para = pickle.load(f)
@@ -190,7 +192,9 @@ def render_data(renderer, data_path, phase, data_id, save_path, cam_nums, res, d
         smplx_np = {}
         for key in smpl_para:
             smplx_np[key] = np.array(smpl_para[key], dtype=np.float32)
-
+        #     print(key)
+        # import sys
+        # sys.exit()
         output = renderer.smpl(global_orient=torch.from_numpy(smplx_np['global_orient']),
                                betas=torch.from_numpy(smplx_np['betas']),
                                body_pose=torch.from_numpy(smplx_np['body_pose']).flatten(1), pose2rot=True)
@@ -302,8 +306,8 @@ if __name__ == '__main__':
     cam_nums = 16
     scene_radius = 2.0
     res = (1024, 1024)
-    thuman_root = 'D:/dataset/thuman2'
-    save_root = 'D:/dataset/thuman2/render'
+    thuman_root = '/ROOT/thuman2'
+    save_root = ''
     renderer = StaticRenderer()
 
     for phase in ['train', 'val']:

@@ -1,7 +1,0 @@
-build/
-pointnet2_ops.egg-info/
-dist/
-
-__pycache__
-
-*.so
