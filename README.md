@@ -44,7 +44,7 @@ This will:
 ### 3) VGGT dependency
 Clone VGGT under the project root (or set your `PYTHONPATH` accordingly):
 ```bash
-git clone <VGGT_REPO_URL> vggt
+git clone <VGGT_REPO_URL>
 ```
 
 ---
@@ -112,3 +112,4 @@ If you use this codebase, please cite our paper:
   year      = {2026}
 }
 ```
+
