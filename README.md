@@ -70,7 +70,7 @@ This will:
 - build/install `./submodules/diff-gaussian-rasterization/`
 ---
 
-## 🗂️ Dataset (THuman2.0)
+## 🗂️ Dataset
 
 ## Dataset Preparation
 
