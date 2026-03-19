@@ -84,8 +84,8 @@ datasets/
 └── THuman/
     ├── THuman2.0_Release/
     └── THuman2.0_smplx/
+```
 After downloading the raw scans, RGB images can be rendered by running:
-
 ```bash
 python ./prepare_data/render_data.py
 ```
