@@ -2,14 +2,11 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from gaussian_renderer import renderThuman
-import torch, numpy as np, trimesh
 
-from vggt.heads.dpt_head import DPTHead
-from vggt.heads.dpt_head_clus import DPTHead_clus
+from lib.models.heads.dpt_head import DPTHead
+from lib.models.core.SC_3D_Atten import SC_3D_Atten
 
 from pytorch3d.loss import chamfer_distance
-
-from lib.modules.SC_3D_Atten import SC_3D_Atten
 
 def depth2pts(depth, extrinsic, intrinsic):
     # depth H W extrinsic 3x4 intrinsic 3x3 pts map H W 3
@@ -71,7 +68,7 @@ def to_cuda(data):
                 data[k] = torch.tensor(data[k]).cuda()
     return data
 
-class HumanModel(nn.Module):
+class GHGSModel(nn.Module):
     def __init__(self, cfg):
         super().__init__()
         self.cfg = cfg
@@ -81,7 +78,8 @@ class HumanModel(nn.Module):
         self.pos_head = DPTHead(dim_in=2 * 1024, output_dim=2, activation="linear", conf_activation="expp1")
         self.blk = SC_3D_Atten(dim = 1024 * 2, k = 64)
         self.indim = 32
-        self.decoder = DPTHead_clus(dim_in=2 * 1024, output_dim=self.indim, activation="linear", conf_activation="expp1")
+        self.decoder = DPTHead(dim_in=2 * 1024, output_dim=self.indim, activation="linear", conf_activation="expp1",
+                                    intermediate_layer_idx=[0, 1,2,3], feature_only_ = True)
         
         self.offset_header = nn.Sequential(
             nn.Linear(self.indim, 128),
@@ -125,7 +123,7 @@ class HumanModel(nn.Module):
         extr = data['ref']['extr']
         intr = data['ref']['intr']
         
-        view_num = 4
+        view_num = self.ref_view_num
 
         if isinstance(data['target']['smpl'],torch.Tensor):
             smpl = data['target']['smpl'].cuda()
@@ -136,7 +134,7 @@ class HumanModel(nn.Module):
 
         token_depth = F.interpolate(pos_out.squeeze(-1), size = (37, 37), mode = "bilinear")
         token_pos = []
-        for v in range(view_num ):
+        for v in range(view_num):
             tmp = depth2pts_token(token_depth[:,v], extr[:,v], intr[:,v])
             token_pos.append(tmp.unsqueeze(0))
         token_pos = torch.cat(token_pos, dim = 0)

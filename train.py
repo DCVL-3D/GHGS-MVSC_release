@@ -10,7 +10,7 @@ from tqdm import tqdm
 from datetime import datetime
 
 from lib.human_loader import HumanDataset
-from lib.network import HumanModel
+from lib.models.core import GHGSModel
 from config.config import Config as config
 from lib.train_recoder import Logger, file_backup
 from lib.loss import l1_loss, l2_loss, psnr
@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 import lpips
 from PIL import Image
-from vggt.models.vggt_dino import VGGT
+from lib.models.core import VGGT
 from pytorch_msssim import ssim
 
 def init_vggt():
@@ -36,7 +36,7 @@ class Trainer:
     def __init__(self, cfg_file):
         self.cfg = cfg_file
 
-        self.model = HumanModel(self.cfg)
+        self.model = GHGSModel(self.cfg)
         self.train_set = HumanDataset(self.cfg.dataset, phase='train')
         num_workers = 0 if args.debug else self.cfg.batch_size * 2
         self.train_loader = DataLoader(self.train_set, batch_size=self.cfg.batch_size, shuffle=True,

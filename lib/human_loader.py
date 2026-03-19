@@ -6,7 +6,7 @@ from lib.graphics_utils import getWorld2View2, getProjectionMatrix, focal2fov
 import lib.utils as utils
 from lib.utils import check_cam
 import cv2
-from vggt.utils.load_fn import load_and_preprocess_images
+from lib.models.utils.load_fn import load_and_preprocess_images
 
 
 class HumanDataset(Dataset):

@@ -3,7 +3,7 @@ restore_ckpt: None
 lr: 0.0001
 wdecay: 1e-5
 batch_size: 1
-stage_1_num_steps: 200010
+stage_1_num_steps: 200000
 dataset:
   source_id: [0, 1]
   train_novel_id: [2, 3, 4]
