@@ -14,9 +14,9 @@ Official PyTorch implementation of <br>
 <em>⛰️CVPR FINDINGS 2026⛰️</em>
 </p>
 
-<p align="center">
+<!-- <p align="center">
 <a href="https://github.com/DCVL-3D/SemanticGHGS_release"><img src="https://img.shields.io/badge/GitHub-Repository-181717?logo=github"></a>
-</p>
+</p> -->
 
 <p align="center">
   <img src="asset/Results.gif" width="90%">
