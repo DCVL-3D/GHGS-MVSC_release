@@ -11,7 +11,7 @@ Official PyTorch implementation of <br>
 </p>
 
 <p align="center">
-<em>Under review</em>
+<em>CVPR FINDINGS 2026</em>
 </p>
 
 <p align="center">
