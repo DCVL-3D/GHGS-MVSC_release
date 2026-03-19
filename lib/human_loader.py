@@ -34,7 +34,7 @@ class HumanDataset(Dataset):
         self.intr_path = os.path.join(self.data_root, 'parm/%s/%d_intrinsic.npy')
         self.extr_path = os.path.join(self.data_root, 'parm/%s/%d_extrinsic.npy')
         ## SMPLX
-        self.smpl_path = os.path.join(self.data_root, self.smpl_name+'smplx/%s/vertices.npy')
+        self.smpl_path = os.path.join(self.data_root, self.smpl_name+'smpl/%s/vertices.npy')
         # self.smplx_path = os.path.join("/mnt/KJG/Human_rendering/dataset/thuman2/THuman2.0_Smpl_X_Paras/%s/smplx_param.pkl",)
         
         self.sample_list = sorted(list(os.listdir(os.path.join(self.data_root, 'img'))))[self.begin::self.intv]
@@ -263,21 +263,9 @@ class HumanDataset(Dataset):
         ref_data['height'] = torch.stack(ref_data['height'], dim=0)
         ref_data['width'] = torch.stack(ref_data['width'], dim=0)
 
-
-        all_extr,all_intr=[],[]
-        for i in range(16):
-            sample_name = subject_idx + '_' + f'{i:03d}'
-            extr_name = self.extr_path % (sample_name, 0)
-            intr_name = self.intr_path % (sample_name, 0)
-            intr, extr = np.load(intr_name), np.load(extr_name)
-            all_intr.append(intr)
-            all_extr.append(extr)
-
         return {
             'target': target_data,
-            'ref': ref_data,
-            'all_intr':all_intr,
-            'all_extr':all_extr
+            'ref': ref_data
         }
 
     def __getitem__(self, index):

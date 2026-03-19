@@ -49,7 +49,7 @@ class Trainer:
         self.len_val = int(len(self.val_loader))  # real length of val set
         self.val_iterator = iter(self.val_loader)
         self.optimizer = optim.AdamW(self.model.parameters(), lr=self.cfg.lr, weight_decay=self.cfg.wdecay, eps=1e-8)
-        self.scheduler = optim.lr_scheduler.OneCycleLR(self.optimizer, self.cfg.lr, self.cfg.stage_1_num_steps+self.cfg.depth_refine_num_steps+ 100,
+        self.scheduler = optim.lr_scheduler.OneCycleLR(self.optimizer, self.cfg.lr, self.cfg.stage_num_steps+ 100,
                                                        pct_start=0.01, cycle_momentum=False, anneal_strategy='linear')
 
         self.logger = Logger(self.scheduler, cfg.record)
@@ -69,7 +69,7 @@ class Trainer:
     def train(self):
         self.model.train()
         self.vggt.eval()
-        progress_bar = tqdm(range(self.total_steps, self.cfg.stage_1_num_steps),
+        progress_bar = tqdm(range(self.total_steps, self.cfg.stage_num_steps),
                             ncols=100,
                             colour='cyan')
         for iter in progress_bar:
