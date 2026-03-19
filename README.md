@@ -72,18 +72,24 @@ This will:
 
 ## 🗂️ Dataset (THuman2.0)
 
-### Download
-Download **THuman2.0** from the official source (access may be required).
+## Dataset Preparation
 
-Recommended structure:
+Please request and download the official **THuman2.0** dataset.  
+The request form is available here: [THuman2.0 Agreement Form](https://github.com/ytrock/THuman2.0-Dataset/blob/main/THUman2.0_Agreement.pdf)
+
+Recommended directory structure:
+
 ```text
 datasets/
-  THuman2.0/
-    raw/
-    processed/
-```
+└── THuman/
+    ├── THuman2.0_Release/
+    └── THuman2.0_smplx/
+After downloading the raw scans, RGB images can be rendered by running:
 
----
+```bash
+python ./prepare_data/render_data.py
+```
+The corresponding SMPL-X parameters should be placed under the dataset directory.
 
 ## 🧪 Training
 
