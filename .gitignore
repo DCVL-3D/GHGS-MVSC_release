@@ -9,8 +9,6 @@ events.*
 *.glb
 *.pth
 *.txt
-vggt/
-pytorch3d/
 __pycache__/
 
 # ---- allowlist (keep these) ----
