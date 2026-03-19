@@ -107,10 +107,14 @@ python test.py --config config/config_thu.yaml --ckpt <PATH_TO_CKPT>
 ---
 
 ## License
-This repository is released for research use.  
-Third-party components under `submodules/` and `vggt/` may have their own licenses—please check them before use.
 
----
+This project is licensed under the **Apache License 2.0**, with the exception of certain components derived from or influenced by third-party projects such as [Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) and [VGGT](https://github.com/facebookresearch/vggt.git).
+
+- **Apache License 2.0**: All original code written for this repository is released under the Apache 2.0 license. See [LICENSE](./LICENSE).
+- **Gaussian Splatting**: Some parts of this project are based on or adapted from [Gaussian Splatting](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/), which is licensed for **non-commercial research use only**. Please check the original project page and related license terms before use.
+- **VGGT**: This repository also includes or depends on components related to [VGGT](https://github.com/facebookresearch/vggt.git). Please refer to the original VGGT repository for its license terms and usage conditions.
+
+This repository is intended for **academic research purposes**. Users are responsible for checking and complying with the licenses of all included or referenced third-party components.
 
 ## Citation
 If you use this codebase, please cite our paper:
