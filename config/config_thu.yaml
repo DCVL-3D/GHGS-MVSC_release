@@ -10,7 +10,7 @@ dataset:
   train_novel_id: [2, 3, 4]
   val_novel_id: [3]
   use_processed_data: True
-  data_root: '/mnt/KJG/Human_rendering/dataset/thuman2/render_ROG'
+  data_root: ''
   training_view_num: 16
   ref_view: [0, 4, 8, 12]
   ref_view_num: 4
