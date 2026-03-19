@@ -40,13 +40,6 @@ This will:
 - install **PyTorch 2.0.1 + CUDA 11.8**, PyTorch3D, iopath
 - install Python deps via `requirements.txt`
 - build/install `./submodules/diff-gaussian-rasterization/`
-
-### 3) VGGT dependency
-Clone VGGT under the project root (or set your `PYTHONPATH` accordingly):
-```bash
-git clone <VGGT_REPO_URL>
-```
-
 ---
 
 ## 🗂️ Dataset (THuman2.0)
