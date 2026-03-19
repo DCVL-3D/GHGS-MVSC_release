@@ -91,36 +91,19 @@ python ./prepare_data/render_data.py
 ```
 The corresponding SMPL-X parameters should be placed under the dataset directory.
 
-## 🧪 Training
+## 🧪 Training and Evaluation
 
-1) Set dataset paths in the config (example):
+Set the dataset path in the config file:
 - `config/config_thu.yaml`
 
-2) Run training:
+Train the model with:
 ```bash
 python train.py --config config/config_thu.yaml
 ```
-
-Checkpoints are saved under:
-```text
-experiments/<exp_name>/ckpt/
-```
-
----
-
-## 🎬 Evaluation / Inference
-
+Evaluate the trained model with:
 ```bash
 python test.py --config config/config_thu.yaml --ckpt <PATH_TO_CKPT>
 ```
-
-Outputs (example):
-```text
-experiments/<exp_name>/test/
-  *.jpg / *.png
-  result.json
-```
-
 ---
 
 ## License
@@ -134,7 +117,7 @@ If you use this codebase, please cite our paper:
 ```bibtex
 @inproceedings{SemanticGHGS2026,
   title     = {Generalizable Human Gaussian Splatting via Multi-view Semantic Consistency},
-  author    = {Jingi Kim and ...},
+  author    = {Jingi Kim and Wonjun Kim},
   booktitle = {CVPR (Findings)},
   year      = {2026}
 }
