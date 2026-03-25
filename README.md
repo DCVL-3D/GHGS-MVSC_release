@@ -11,7 +11,7 @@ Official PyTorch implementation of <br>
 </p>
 
 <p align="center">
-<em>⛰️CVPR FINDINGS 2026⛰️</em>
+  <strong><em>⛰️CVPR 2026 Findings⛰️</em></strong>
 </p>
 
 <!-- <p align="center">
