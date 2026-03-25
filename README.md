@@ -1,4 +1,4 @@
-<h1 align="center">SemanticGHGS: Generalizable Human Gaussian Splatting<br>via Multi-View Semantic Consistency</h1>
+<h1 align="center">Generalizable Human Gaussian Splatting<br>via Multi-View Semantic Consistency</h1>
 
 <p align="center">
 Official PyTorch implementation of <br>
