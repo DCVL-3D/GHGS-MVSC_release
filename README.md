@@ -114,7 +114,7 @@ python test.py --config config/config_thu.yaml --ckpt <PATH_TO_CKPT>
 Set the dataset path in the config file:
 - `config/config_thu.yaml`
 
-Download the pretrained checkpoint from link at [here](https://drive.google.com/file/d/1ijy-5z-pKOWJ_85gigyu18YylcFnAcQH/view?usp=share_link).
+Download the pretrained checkpoint from link at [here](https://drive.google.com/drive/folders/19dzCdnVlUfWtwG8rBgusuecDsjPaP0C4?usp=share_link) (THuman2.0, THuman2.1, 2K2K, Xhuman).
 
 Evaluate the trained model with:
 ```bash
