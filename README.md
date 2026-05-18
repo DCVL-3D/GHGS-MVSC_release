@@ -91,6 +91,7 @@ python ./prepare_data/render_data.py
 ```
 The corresponding SMPL-X parameters should be placed under the dataset directory.
 
+<!--
 ## 🧪 Training and Evaluation
 
 Set the dataset path in the config file:
@@ -100,10 +101,26 @@ Train the model with:
 ```bash
 python train.py --config config/config_thu.yaml
 ```
+
 Evaluate the trained model with:
 ```bash
 python test.py --config config/config_thu.yaml --ckpt <PATH_TO_CKPT>
 ```
+---
+-->
+
+## 🧪 Evaluation
+
+Set the dataset path in the config file:
+- `config/config_thu.yaml`
+
+Download the pretrained checkpoint from link at [here](https://drive.google.com/file/d/1ijy-5z-pKOWJ_85gigyu18YylcFnAcQH/view?usp=share_link).
+
+Evaluate the trained model with:
+```bash
+python test.py --config config/config_thu.yaml --ckpt <PATH_TO_CKPT>
+```
+
 ---
 
 ## License
