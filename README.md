@@ -139,7 +139,7 @@ If you use this codebase, please cite our paper:
 @inproceedings{SemanticGHGS2026,
   title     = {Generalizable Human Gaussian Splatting via Multi-view Semantic Consistency},
   author    = {Jingi Kim and Wonjun Kim},
-  booktitle = {CVPR (Findings)},
-  year      = {2026}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+  year={2026}
 }
 ```
