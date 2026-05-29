@@ -136,10 +136,12 @@ This repository is intended for **academic research purposes**. Users are respon
 ## Citation
 If you use this codebase, please cite our paper:
 ```bibtex
-@inproceedings{SemanticGHGS2026,
-  title     = {Generalizable Human Gaussian Splatting via Multi-view Semantic Consistency},
-  author    = {Jingi Kim and Wonjun Kim},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
-  year={2026}
+@InProceedings{Kim_2026_CVPR,
+    author    = {Kim, Jingi and Kim, Wonjun},
+    title     = {Generalizable Human Gaussian Splatting via Multi-view Semantic Consistency},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+    month     = {June},
+    year      = {2026},
+    pages     = {139-148}
 }
 ```
